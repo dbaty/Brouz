@@ -1,0 +1,14 @@
+- implement edition of composite transactions
+
+- validate HTML & CSS
+
+- speed up tests
+
+- allow templates to be created (useful for recurring transactions). A
+  template could be a pickled form.
+
+- expand documentation and publish on packages.python.org and PyPI.
+
+- make CSRF errors visible. Currently, the form is redisplayed (just
+  like for any kind of error), but because the 'csrf_token' field is
+  hidden, so is the error message.

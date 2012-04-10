@@ -1,0 +1,64 @@
+* {
+    font-family: "Lucida Grande", arial, sans-serif;
+}
+
+body {
+    background-color: white;
+    color: black;
+    font-size: 87.5%; /* 14px */
+}
+
+h1, h2 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+p, table {
+    line-height: 1.4em;
+    margin-bottom: 1em;
+}
+
+img {
+    border: 0;
+}
+
+a {
+    color: black;
+    text-decoration: underline;
+}
+
+a img {
+    vertical-align: middle;
+}
+
+.hidden {
+    display: none;
+}
+
+.centered {
+    text-align: center;
+}
+
+.right-aligned {
+    text-align: right;
+}
+
+.expanded {
+    width: 100%;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.three-columns-reports > table {
+    /* The total width is 1000px. */
+    float: left;
+    width: 329px;
+    margin-right: 5px;
+}
+
+.three-columns-reports > table:last-child {
+    width: 332px;
+    margin-right: 0;
+}

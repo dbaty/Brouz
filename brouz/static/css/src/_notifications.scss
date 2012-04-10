@@ -1,0 +1,21 @@
+.notification {
+    border-width: 1px 1px 1px 0.5em;
+    border-style: solid;
+    font-weight: bold;
+    color: black;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.notification-success {
+    @extend .notification;
+    border-color: #007d39;
+    background-color: #f4fffa;
+}
+
+.notification-error {
+    @extend .notification;
+    color: #cc0000;
+    border-color: #cc0000;
+    background-color: #ffeeee;
+}

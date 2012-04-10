@@ -1,0 +1,49 @@
+<layout metal:use-macro="api.layout" i18n:domain="brouz">
+<metal:content metal:fill-slot="content">
+
+<ol class="actions">
+  <li>
+    <a tal:attributes="href api.route_url('add-unique')" i18n:translate="">
+      Add unique transaction
+    </a>
+  </li>
+  <li>
+    <a tal:attributes="href api.route_url('add-composite')" i18n:translate="">
+      Add composite transaction
+    </a>
+  </li>
+</ol>
+
+<table class="listing">
+  <thead>
+    <tr>
+      <th></th>
+      <th i18n:translate="">Date</th>
+      <th i18n:translate="">Party</th>
+      <th i18n:translate="">Title</th>
+      <th i18n:translate="">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr tal:repeat="line lines"
+        tal:attributes="class repeat['line'].odd and 'odd'">
+      <td class="edit-action">
+        <a tal:attributes="href api.route_url('edit', transaction_id=line.id)"
+           i18n:translate="">edit</a>
+      </td>
+      <td tal:content="api.format_date(line.date)" class="nowrap"/>
+      <td tal:content="line.party" class="nowrap"/>
+      <td tal:content="line.title"/>
+      <td tal:content="api.format_num(line.signed_amount)" class="nowrap right-aligned"/>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="3" i18n:translate="">Balance</th>
+      <td tal:content="api.format_num(balance)"/>
+    </tr>
+  </tfoot>
+</table>
+
+</metal:content>
+</layout>

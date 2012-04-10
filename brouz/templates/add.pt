@@ -1,0 +1,7 @@
+<layout metal:use-macro="api.layout">
+<metal:content metal:fill-slot="content">
+
+<tal:form tal:replace="structure form.render()"/>
+
+</metal:content>
+</layout>

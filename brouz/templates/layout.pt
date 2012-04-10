@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+<head>
+  <title>Brouz</title>
+  <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+  <link rel="icon" tal:attributes="href api.static_url('static/img/favicon.ico')" type="image/x-icon"/>
+  <script tal:attributes="src api.static_url('static/js/jquery-1.7.1.min.js')"></script>
+  <script tal:attributes="src api.static_url('static/js/jquery-ui-1.8.18.custom.min.js')"></script>
+  <script tal:attributes="src api.static_url('deform:static/scripts/deform.js')"></script>
+  <link rel="stylesheet" type="text/css" tal:attributes="href api.static_url('static/css/jquery-ui-1.8.18.custom.css')"/>
+  <link rel="stylesheet" type="text/css"
+        tal:attributes="href api.static_url('static/css/style.css')"/>
+</head>
+
+<body i18n:domain="brouz">
+  <ul class="nav">
+    <li tal:attributes="class api.current_page == 'home' and 'current'">
+      <a tal:attributes="href api.route_url('home')"
+         i18n:translate="">home</a>
+    </li>
+    <li tal:attributes="class api.current_page == 'reports' and 'current'">
+      <a tal:attributes="href api.route_url('reports')"
+         i18n:translate="">reports</a>
+    </li>
+  </ul>
+
+  <div class="content">
+    <div class="notification-success"
+         tal:repeat="notification api.notifications['success']"
+         tal:content="notification"/>
+    <div class="notification-error"
+         tal:repeat="notification api.notifications['error']"
+         tal:content="notification"/>
+    <metal:content metal:define-slot="content"></metal:content>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<layout metal:use-macro="api.layout">
+<metal:content metal:fill-slot="content">
+
+<tal:form tal:replace="structure form.render(data)"/>
+
+<form tal:attributes="action api.route_url('delete', transaction_id=data.id)"
+      method="POST"
+      i18n:domain="brouz">
+  <fieldset class="deformFormFieldset">
+    <ul>
+      <li class="checkbox-field">
+        <label>
+          <input type="checkbox" name="confirm" value="1"/> 
+          <span tal:omit-tag="" i18n:translate="">Yes, I really want to delete this transaction.</span>
+        </label>
+      </li>
+    </ul>
+    <button name="submit"
+            type="submit"
+            value="submit"
+            i18n:translate="">Delete this transaction</button>
+  </fieldset>
+</form>
+
+</metal:content>
+</layout>

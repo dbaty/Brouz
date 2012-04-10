@@ -1,0 +1,69 @@
+.listing {
+    width: 100%;
+    border-collapse:collapse;
+
+    th {
+        border-bottom: 1px solid #ccc;
+        border-right: 1px solid #eee;
+        padding: 0.2em 1em;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    th:last-child {
+        border-right: 0;
+    }
+
+    tr.odd {
+        background-color: #f7f7f7;
+    }
+
+    td {
+        border-bottom: 1px solid #eee;
+        border-right: 1px solid #eee;
+        padding: 0.5em;
+    }
+
+    td:last-child {
+        border-right: 0;
+    }
+
+    tfoot {
+        font-weight: bold;
+        font-size: 1.2em;
+
+        th {
+            text-align: right;
+        }
+
+        th, td {
+            border-bottom: 0;
+        }
+    }
+}
+
+
+.report {
+    width: 100%;
+    border-collapse:collapse;
+    border: 1px solid #ccc;
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 0.5em;
+    }
+
+    caption {
+        padding: 0.5em;
+        font-size: 1.2em;
+        font-weight: bold;
+        background-color: #ddd;
+        border: 1px solid #ccc;
+        border-bottom: 0;
+    }
+
+    .total {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+}

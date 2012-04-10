@@ -1,0 +1,88 @@
+.nav {
+    background-color: #c6d880;
+    border-bottom: 1px solid #aaa;
+    padding: 0.5em 0;
+    text-align: center;
+    list-style-type: none;
+
+    li {
+        display: inline;
+        padding-right: 1em;
+    }
+
+    li:last-child {
+        padding-right: 0;
+    }
+
+    li.current {
+        font-weight: bold;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.actions {
+    text-align: center;
+    list-style-type: none;
+    margin-bottom: 1em;
+
+    li  {
+        display: inline-block;
+        padding: 0.5em;
+        font-size: 1em;
+        font-weight: bold;
+        border: 1px solid #ccc;
+        background-color: #eee;
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    }
+
+    li:hover {
+        border: 1px solid #777;
+    }
+}
+
+.content {
+    width: 1000px;
+    margin: 1em auto;
+
+    h1 {
+        font-size: 1.3em;
+        font-weight: bold;
+        margin-bottom: 0.5em;
+    }
+
+    a {
+        color: #1b5c11;
+    }
+
+    a:hover {
+        color: black;
+    }
+}
+
+.edit-action a {
+    text-decoration: none;
+    color: #ccc;
+}
+
+.edit-action:hover a {
+    text-decoration: underline;
+    color: #1b5c11;
+}
+
+.report-year {
+    font-size: 1.6em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5em;
+
+    a {
+        text-decoration: none;
+    }
+}

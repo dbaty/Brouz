@@ -1,0 +1,342 @@
+# French translations for Brouz.
+# Copyright (C) 2012 ORGANIZATION
+# This file is distributed under the same license as the Brouz project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Brouz 0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2012-04-06 19:35+0200\n"
+"PO-Revision-Date: 2012-03-16 17:12+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: brouz/forms.py:47
+msgid "Select the category..."
+msgstr "Sélectionnez la catégorie..."
+
+#: brouz/forms.py:48
+msgid "Income"
+msgstr "Recette"
+
+#: brouz/forms.py:49
+msgid "Expenditure"
+msgstr "Dépense"
+
+#: brouz/forms.py:50
+msgid "Purchase"
+msgstr "Achat"
+
+#: brouz/forms.py:51 brouz/forms.py:112
+msgid "VAT"
+msgstr "TVA"
+
+#: brouz/forms.py:52
+msgid "CET"
+msgstr "CET (Contribution économique territoriale)"
+
+#: brouz/forms.py:54
+msgid "Other taxes"
+msgstr "Autres taxes"
+
+#: brouz/forms.py:56
+msgid "Deductible CSG"
+msgstr "CSG déductible"
+
+#: brouz/forms.py:58
+msgid "Non-deductible CSG"
+msgstr "CSG non-déductible"
+
+#: brouz/forms.py:60
+msgid "Small furniture"
+msgstr "Petit outillage"
+
+#: brouz/forms.py:62
+msgid "Insurance premium"
+msgstr "Primes d'assurance"
+
+#: brouz/forms.py:64
+msgid "Travel expenses"
+msgstr "Autres frais de déplacements (voyages...)"
+
+#: brouz/forms.py:66
+msgid "Obligatory social charges"
+msgstr "Charges sociales obligatoires"
+
+#: brouz/forms.py:68
+msgid "Optional social charges"
+msgstr "Charges sociales facultatives"
+
+#: brouz/forms.py:70
+msgid "Conferences"
+msgstr "Frais de réception, de représentation et de congrès"
+
+#: brouz/forms.py:72
+msgid "Office furniture"
+msgstr "Fournitures de bureau, etc."
+
+#: brouz/forms.py:74
+msgid "Other miscellaneous expenses"
+msgstr "Autres frais de gestion"
+
+#: brouz/forms.py:76
+msgid "Banking charges"
+msgstr "Frais financiers"
+
+#: brouz/forms.py:78
+msgid "Fixed assets"
+msgstr "Immobilisation"
+
+#: brouz/forms.py:79
+msgid "Remuneration"
+msgstr "Rémunération"
+
+#: brouz/forms.py:101 brouz/templates/home.pt:23
+msgid "Title"
+msgstr "Intitulé"
+
+#: brouz/forms.py:106
+msgid "Category"
+msgstr "Catégorie"
+
+#: brouz/forms.py:109 brouz/templates/home.pt:24
+msgid "Amount"
+msgstr "Montant (TTC)"
+
+#: brouz/forms.py:118
+msgid "Line"
+msgstr "Ligne"
+
+#: brouz/forms.py:125 brouz/templates/home.pt:22
+msgid "Party"
+msgstr "Client/prestataire"
+
+#: brouz/forms.py:131 brouz/templates/home.pt:21
+msgid "Date"
+msgstr "Date"
+
+#: brouz/forms.py:134
+msgid "Mean"
+msgstr "Moyen de paiement"
+
+#: brouz/forms.py:137
+msgid "Invoice number"
+msgstr "Numéro de facture"
+
+#: brouz/forms.py:139
+msgid "Lines"
+msgstr "Lignes"
+
+#: brouz/forms.py:141
+msgid "Add a line"
+msgstr "Ajouter une ligne"
+
+#: brouz/models.py:52
+msgid "Select the payment mean..."
+msgstr "Sélectionnez le moyen de paiement..."
+
+#: brouz/models.py:53
+msgid "Credit card"
+msgstr "Carte bancaire"
+
+#: brouz/models.py:54
+msgid "Wire transfer"
+msgstr "Virement"
+
+#: brouz/models.py:55
+msgid "Check"
+msgstr "Chèque"
+
+#: brouz/models.py:56
+msgid "Direct debit"
+msgstr "Prélèvement"
+
+#: brouz/views.py:50 brouz/views.py:58 brouz/views.py:74 brouz/views.py:82
+msgid "Add transaction"
+msgstr "Ajouter la transaction"
+
+#: brouz/views.py:68 brouz/views.py:114
+msgid "The transaction has been added."
+msgstr "La transaction a été enregistrée."
+
+#: brouz/views.py:125 brouz/views.py:129 brouz/views.py:144 brouz/views.py:146
+msgid "Save changes"
+msgstr "Sauvegarder les modifications"
+
+#: brouz/views.py:157
+msgid "The transaction has been modified."
+msgstr "La transaction a été modifiée."
+
+#: brouz/views.py:164
+msgid "You did not confirm that you want to delete this transaction."
+msgstr ""
+"Vous n'avez pas confirmé que vous souhaitiez vraiment supprimer cette "
+"transaction."
+
+#: brouz/views.py:172
+msgid "The transaction has been deleted."
+msgstr "La transaction a été supprimée."
+
+#: brouz/templates/edit.pt:14
+msgid "Yes, I really want to delete this transaction."
+msgstr "Oui, je veux vraiment supprimer cette transaction."
+
+#: brouz/templates/edit.pt:18
+msgid "Delete this transaction"
+msgstr "Supprimer cette transaction"
+
+#: brouz/templates/home.pt:6
+msgid "Add unique transaction"
+msgstr "Ajouter une transaction unique"
+
+#: brouz/templates/home.pt:11
+msgid "Add composite transaction"
+msgstr "Ajouter une transaction composite"
+
+#: brouz/templates/home.pt:31
+msgid "edit"
+msgstr "modifier"
+
+#: brouz/templates/home.pt:42
+msgid "Balance"
+msgstr "Balance"
+
+#: brouz/templates/layout.pt:20
+msgid "home"
+msgstr "accueil"
+
+#: brouz/templates/layout.pt:24
+msgid "reports"
+msgstr "rapports"
+
+#. Default: Income
+#: brouz/templates/reports.pt:17
+msgid "report_caption_income"
+msgstr "Recettes"
+
+#. Default: AA
+#: brouz/templates/reports.pt:20
+msgid "report_aa"
+msgstr "Recettes encaissées (y compris les remboursements de frais)"
+
+#: brouz/templates/reports.pt:26 brouz/templates/reports.pt:119
+#: brouz/templates/reports.pt:156
+msgid "Total"
+msgstr "Total"
+
+#. Default: Expenditure
+#: brouz/templates/reports.pt:34
+msgid "report_caption_expenditure"
+msgstr "Dépenses"
+
+#. Default: BA
+#: brouz/templates/reports.pt:37
+msgid "report_ba"
+msgstr "Achats"
+
+#. Default: BD
+#: brouz/templates/reports.pt:43
+msgid "report_bd"
+msgstr "Taxe sur la valeur ajoutée"
+
+#. Default: JY
+#: brouz/templates/reports.pt:48
+msgid "report_jy"
+msgstr "Contribution économique territoriale"
+
+#. Default: BS
+#: brouz/templates/reports.pt:53
+msgid "report_bs"
+msgstr "Autres impôts"
+
+#. Default: BV
+#: brouz/templates/reports.pt:58
+msgid "report_bv"
+msgstr "CSG déductible"
+
+#. Default: Small furniture
+#: brouz/templates/reports.pt:64
+msgid "report_small_furniture"
+msgstr "Petit outillage"
+
+#. Default: Insurance premium
+#: brouz/templates/reports.pt:70
+msgid "report_insurance_premium"
+msgstr "Primes d'assurance"
+
+#. Default: Other travel expenses
+#: brouz/templates/reports.pt:74
+msgid "report_travel_expenses"
+msgstr "Autres frais de déplacements (voyages...)"
+
+#: brouz/templates/reports.pt:81
+msgid "Social charges"
+msgstr "Charges sociales"
+
+#. Default: obligatory
+#: brouz/templates/reports.pt:82
+msgid "report_social_charges_obligatory"
+msgstr "obligatoires"
+
+#. Default: optional
+#: brouz/templates/reports.pt:87
+msgid "report_social_charges_optional"
+msgstr "facultatives"
+
+#. Default: total
+#: brouz/templates/reports.pt:92
+msgid "report_social_charges_total"
+msgstr "total"
+
+#. Default: Conferences
+#: brouz/templates/reports.pt:98
+msgid "report_conferences"
+msgstr "Frais de réception, de représentation et de congrès"
+
+#. Default: Office
+#: brouz/templates/reports.pt:104
+msgid "report_office"
+msgstr ""
+"Fournitures de bureau, frais de documentation, de correspondance et de "
+"téléphone"
+
+#. Default: Other expenses
+#: brouz/templates/reports.pt:108
+msgid "report_other_expenses"
+msgstr "Autres frais divers de gestion"
+
+#. Default: BN
+#: brouz/templates/reports.pt:113
+msgid "report_bn"
+msgstr "Frais financiers"
+
+#. Default: Clients
+#: brouz/templates/reports.pt:129
+msgid "report_caption_clients"
+msgstr "Clients"
+
+#. Default: Providers
+#: brouz/templates/reports.pt:139
+msgid "report_caption_providers"
+msgstr "Prestataires"
+
+#. Default: Remuneration
+#: brouz/templates/reports.pt:149
+msgid "report_caption_remuneration"
+msgstr "Rémunération"
+
+#~ msgid "report_bt"
+#~ msgstr "Charges sociales personnelles obligatoires"
+
+#~ msgid "report_bu"
+#~ msgstr "Charges sociales personnelles facultatives"
+
+#~ msgid "report_bk"
+#~ msgstr "Charges sociales personnelles (total)"
+
