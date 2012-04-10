@@ -169,10 +169,12 @@ class UniqueTransactionSchema(CSRFSchema):
 def make_unique_transaction_form(request, button_title):
     schema = UniqueTransactionSchema().bind(request=request)
     return Form(schema,
+                action=request.route_url('add-unique'),
                 buttons=(Button(title=button_title), ))
 
 
 def make_composite_transaction_form(request, button_title):
     schema = CompositeTransactionSchema().bind(request=request)
     return Form(schema,
+                action=request.route_url('add-composite'),
                 buttons=(Button(title=button_title), ))

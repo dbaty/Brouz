@@ -1,7 +1,5 @@
 - implement edition of composite transactions
 
-- validate HTML & CSS
-
 - speed up tests
 
 - allow templates to be created (useful for recurring transactions). A
