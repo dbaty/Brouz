@@ -2,9 +2,7 @@
 preferences, as well as the ``_`` translation function.
 """
 
-from pyramid.i18n import get_localizer
 from pyramid.i18n import TranslationStringFactory
-from pyramid.threadlocal import get_current_request
 
 from webob.acceptparse import NilAccept
 
@@ -26,8 +24,3 @@ def locale_negotiator(request):
         # locale name, so here we will work around this.
         return None
     return header.best_match(available_languages)
-
-
-def deform_translator(term):
-    localizer = get_localizer(get_current_request())
-    return localizer.translate(term)

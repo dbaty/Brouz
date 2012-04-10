@@ -1,5 +1,4 @@
 import itertools
-from pkg_resources import resource_filename
 
 from colander import Date
 from colander import Float
@@ -22,7 +21,6 @@ from deform.widget import TextInputWidget
 from pyramid_deform import CSRFSchema
 
 from brouz.i18n import _
-from brouz.i18n import deform_translator
 from brouz.models import CATEGORY_EXPENDITURE_BANKING_CHARGES
 from brouz.models import CATEGORY_EXPENDITURE_CET
 from brouz.models import CATEGORY_EXPENDITURE_CONFERENCES
@@ -178,8 +176,3 @@ def make_composite_transaction_form(request, button_title):
     schema = CompositeTransactionSchema().bind(request=request)
     return Form(schema,
                 buttons=(Button(title=button_title), ))
-
-
-def set_deform_zpt_renderer():
-    deform_template_dir = resource_filename('deform', 'templates')
-    Form.set_zpt_renderer(deform_template_dir, translator=deform_translator)
