@@ -134,3 +134,102 @@ class TestAddComposite(TestCaseForViews):
             self.assertEqual(t.type, c.type)
             self.assertEqual(t.mean, c.mean)
             self.assertEqual(t.invoice, c.invoice)
+
+
+class TestEditUnique(TestCaseForViews):
+
+    def _call_fut(self, request):
+        from brouz.views import edit
+        return edit(request)
+
+    def _make_one(self):
+        from datetime import date
+        from brouz.models import CATEGORY_EXPENDITURE_PURCHASE
+        from brouz.models import PAYMENT_MEAN_CREDIT_CARD
+        from brouz.models import Transaction
+        t = Transaction(party=u'Party',
+                        title=u'Title',
+                        date=date(2011, 1, 1),
+                        year=2011,
+                        category=CATEGORY_EXPENDITURE_PURCHASE,
+                        amount=123.45,
+                        vat=12.34,
+                        mean=PAYMENT_MEAN_CREDIT_CARD,
+                        invoice=u'',
+                        composite=0,
+                        part_of=None)
+        self.session.add(t)
+        self.session.flush()  # sets t.id
+        return t
+
+    def test_basics(self):
+        from datetime import date
+        from brouz.models import CATEGORY_EXPENDITURE_SMALL_FURNITURE
+        from brouz.models import PAYMENT_MEAN_WIRE_TRANSFER
+        from brouz.models import Transaction
+        from brouz.models import TYPE_EXPENDITURE
+        t = self._make_one()
+        matchdict = {'transaction_id': t.id}
+        post = {'party': u'Edited party',
+                'title': u'Edited title',
+                'date': u'2012-01-01',
+                'category': unicode(CATEGORY_EXPENDITURE_SMALL_FURNITURE),
+                'amount': u'1234.56',
+                'vat': u'123.45',
+                'mean': unicode(PAYMENT_MEAN_WIRE_TRANSFER),
+                'invoice': u'INVOICE-01'}
+        request = self._make_request(post=post, matchdict=matchdict)
+        request.POST['csrf_token'] = request.session.get_csrf_token()
+        self._call_fut(request)
+        self.assertEqual(len(request.get_flash('success')), 1)
+        self.assertEqual(len(request.get_flash('error')), 0)
+        t = self.session.query(Transaction).one()
+        self.assertEqual(t.party, post['party'])
+        self.assertEqual(t.title, post['title'])
+        self.assertEqual(t.date, date(2012, 1, 1))
+        self.assertEqual(t.year, 2012)
+        self.assertEqual(t.category, int(post['category']))
+        self.assertEqual(t.type, TYPE_EXPENDITURE)
+        self.assertEqual(t.amount, float(post['amount']))
+        self.assertEqual(t.vat, float(post['vat']))
+        self.assertEqual(t.mean, int(post['mean']))
+        self.assertEqual(t.invoice, post['invoice'])
+        self.assertEqual(t.composite, False)
+        self.assertEqual(t.part_of, None)
+
+
+class TestEditComposite(TestCaseForViews):
+
+    def _call_fut(self, request):
+        from brouz.views import edit
+        return edit(request)
+
+    def _make_one(self):
+        from datetime import date
+        from brouz.models import CATEGORY_EXPENDITURE_PURCHASE
+        from brouz.models import PAYMENT_MEAN_CREDIT_CARD
+        from brouz.models import Transaction
+        t = Transaction(party=u'Party',
+                        title=u'Title',
+                        date=date(2011, 1, 1),
+                        year=2011,
+                        category=CATEGORY_EXPENDITURE_PURCHASE,
+                        amount=123.45,
+                        vat=12.34,
+                        mean=PAYMENT_MEAN_CREDIT_CARD,
+                        invoice=u'',
+                        composite=True,
+                        part_of=None)
+        self.session.add(t)
+        self.session.flush()  # sets t.id
+        # FIXME: add lines
+        return t
+
+    def test_basics(self):
+        from datetime import date
+        from brouz.models import CATEGORY_EXPENDITURE_SMALL_FURNITURE
+        from brouz.models import PAYMENT_MEAN_WIRE_TRANSFER
+        from brouz.models import Transaction
+        from brouz.models import TYPE_EXPENDITURE
+        t = self._make_one()
+        # FIXME: to be completed

@@ -1,5 +1,3 @@
-- implement edition of composite transactions
-
 - speed up tests
 
 - allow templates to be created (useful for recurring transactions). A

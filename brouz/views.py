@@ -5,12 +5,15 @@ from deform.exception import ValidationFailure
 from pyramid.httpexceptions import HTTPSeeOther
 from pyramid.renderers import render_to_response
 
-from brouz.forms import make_composite_transaction_form
-from brouz.forms import make_unique_transaction_form
+from brouz.forms import make_add_form
+from brouz.forms import make_edit_form
+from brouz.i18n import _
 from brouz.models import CATEGORY_EXPENDITURE_BANKING_CHARGES
 from brouz.models import CATEGORY_EXPENDITURE_CET
 from brouz.models import CATEGORY_EXPENDITURE_CONFERENCES
 from brouz.models import CATEGORY_EXPENDITURE_DEDUCTIBLE_CSG
+from brouz.models import CATEGORY_EXPENDITURE_FIXED_ASSETS
+from brouz.models import CATEGORY_EXPENDITURE_HARDWARE_FURNITURE_RENTAL
 from brouz.models import CATEGORY_EXPENDITURE_INSURANCE_PREMIUM
 from brouz.models import CATEGORY_EXPENDITURE_OBLIGATORY_SOCIAL_CHARGES
 from brouz.models import CATEGORY_EXPENDITURE_OFFICE_FURNITURE
@@ -25,7 +28,9 @@ from brouz.models import CATEGORY_INCOME_MISC
 from brouz.models import CATEGORY_REMUNERATION
 from brouz.models import DBSession
 from brouz.models import Transaction
-from brouz.i18n import _
+from brouz.models import TYPE_INCOME
+from brouz.models import TYPE_EXPENDITURE
+from brouz.utils import calculate_amortization
 from brouz.utils import TemplateAPI
 
 
@@ -36,7 +41,7 @@ def home(request):
     lines = lines.order_by(Transaction.date,
                            Transaction.party,
                            Transaction.title)
-    balance = sum(i.signed_amount for i in lines)
+    balance = sum(line.signed_amount for line in lines)
     # FIXME: paginate
     api = TemplateAPI(request, 'home')
     bindings = {'api': api,
@@ -47,7 +52,7 @@ def home(request):
 
 def add_unique_form(request, form=None):
     if form is None:
-        form = make_unique_transaction_form(request, _('Add transaction'))
+        form = make_add_form(request, composite=False)
     api = TemplateAPI(request, 'add')
     bindings = {'api': api,
                 'form': form}
@@ -55,7 +60,7 @@ def add_unique_form(request, form=None):
 
 
 def add_unique(request):
-    form = make_unique_transaction_form(request, _('Add transaction'))
+    form = make_add_form(request, composite=False)
     try:
         data = form.validate(request.POST.items())
     except ValidationFailure, e:
@@ -71,7 +76,7 @@ def add_unique(request):
 
 def add_composite_form(request, form=None):
     if form is None:
-        form = make_composite_transaction_form(request, _('Add transaction'))
+        form = make_add_form(request, composite=True)
     api = TemplateAPI(request, 'add')
     bindings = {'api': api,
                 'form': form}
@@ -79,7 +84,7 @@ def add_composite_form(request, form=None):
 
 
 def add_composite(request):
-    form = make_composite_transaction_form(request, _('Add transaction'))
+    form = make_add_form(request, composite=True)
     try:
         data = form.validate(request.POST.items())
     except ValidationFailure, e:
@@ -121,12 +126,14 @@ def edit_form(request, form=None):
         transaction_id = request.matchdict['transaction_id']
         transaction = session.query(Transaction).\
             filter_by(id=transaction_id).one()
+        form = make_edit_form(request, transaction)
         if transaction.composite:
-            form = make_composite_transaction_form(request, _('Save changes'))
-            data = None  # 'FIXME'
-            raise NotImplementedError
+            data = transaction.__dict__
+            data['lines'] = []
+            for tr in session.query(Transaction).\
+                    filter_by(part_of=transaction_id).all():
+                data['lines'].append(tr.__dict__)
         else:
-            form = make_unique_transaction_form(request, _('Save changes'))
             data = transaction.__dict__
     api = TemplateAPI(request, 'add')
     bindings = {'api': api,
@@ -140,10 +147,7 @@ def edit(request):
     transaction_id = request.matchdict['transaction_id']
     transaction = session.query(Transaction).\
         filter_by(id=transaction_id).one()
-    if transaction.composite:
-        form = make_composite_transaction_form(request, _('Save changes'))
-    else:
-        form = make_unique_transaction_form(request, _('Save changes'))
+    form = make_edit_form(request, transaction)
     try:
         data = form.validate(request.POST.items())
     except ValidationFailure, e:
@@ -193,6 +197,9 @@ def reports(request):
     lines = session.query(Transaction).\
         filter_by(year=year, composite=False).all()
     report = _calculate_report(lines)
+    _update_report_with_fixed_assets(report, year, session)
+    _update_report_with_vat(report, lines)
+    # FIXME: move these in separate function(s)?
     report['clients'] = session.execute(
         'SELECT party, SUM(amount) AS sum '
         'FROM transactions '
@@ -224,13 +231,11 @@ def reports(request):
     return render_to_response('templates/reports.pt', bindings)
 
 
-def _get_sum_of_lines(lines, category):
-    return sum(line.amount for line in lines if line.category == category)
-
-
 def _calculate_report(lines):
     # Les commentaires correspondent aux intitules exacts de la
     # declaration 2035-1K (2012).
+    _get_sum_of_lines = lambda lines, category: sum(
+        line.amount for line in lines if line.category == category)
     # Recettes encaissees y compris les remboursements de frais
     aa = _get_sum_of_lines(lines, CATEGORY_INCOME_MISC)
     total_income = aa
@@ -246,6 +251,9 @@ def _calculate_report(lines):
     bs = _get_sum_of_lines(lines, CATEGORY_EXPENDITURE_OTHER_TAXES)
     # CSG deductible
     bv = _get_sum_of_lines(lines, CATEGORY_EXPENDITURE_DEDUCTIBLE_CSG)
+    # Location de materiel et de mobilier
+    bg = _get_sum_of_lines(
+        lines, CATEGORY_EXPENDITURE_HARDWARE_FURNITURE_RENTAL)
     # Petit outillage
     bh_small_furniture = _get_sum_of_lines(
         lines, CATEGORY_EXPENDITURE_SMALL_FURNITURE)
@@ -279,7 +287,7 @@ def _calculate_report(lines):
     # Frais financiers
     bn = _get_sum_of_lines(lines, CATEGORY_EXPENDITURE_BANKING_CHARGES)
     # Total (BR)
-    total_expenditure = ba + bd + jy + bs + bv + bh + bj + bk + bm + bn
+    total_expenditure = ba + bd + jy + bs + bv + bg + bh + bj + bk + bm + bn
     report = {'aa': aa,
               'total_income': total_income,
               'ba': ba,
@@ -289,6 +297,7 @@ def _calculate_report(lines):
               'bv': bv,
               'bh_small_furniture': bh_small_furniture,
               'bh_insurance_premium': bh_insurance_premium,
+              'bg': bg,
               'bh': bh,
               'bj_travel_expenses': bj_travel_expenses,
               'bj': bj,
@@ -300,9 +309,54 @@ def _calculate_report(lines):
               'bm_other': bm_other,
               'bm': bm,
               'bn': bn,
-              'total_expenditure': total_expenditure,
-              }
+              'total_expenditure': total_expenditure}
     return report
+
+
+def _update_report_with_fixed_assets(report, year, session):
+    """Update report with fixed assets ("immobilisations et
+    amortissements").
+    """
+    assets = []
+    for transaction in session.query(Transaction).\
+            filter_by(category=CATEGORY_EXPENDITURE_FIXED_ASSETS,
+                      composite=False):
+        amortization = calculate_amortization(transaction)
+        this_year_index = year - transaction.year
+        past = sum(amortization[:this_year_index])
+        try:
+            this_year = amortization[this_year_index]
+        except IndexError:
+            this_year = 0  # already amortized
+        asset = {'title': transaction.title,
+                 'date': transaction.date,
+                 'amount': transaction.amount,
+                 'vat': transaction.vat,
+                 'base': transaction.amount - transaction.vat,
+                 'past': past,
+                 'this_year': this_year}
+        assets.append(asset)
+    report['fixed_assets'] = {
+        'assets': assets,
+        'total_amount': sum(a['amount'] for a in assets),
+        'total_base': sum(a['base'] for a in assets),
+        'total_past': sum(a['past'] for a in assets),
+        'total_this_year': sum(a['this_year'] for a in assets)}
+
+
+def _update_report_with_vat(report, lines):
+    """Update report with total VAT for incomes and expenditures (not
+    including fixed assets.
+    """
+    report['vat_incomes'] = sum(
+        l.vat for l in lines if l.type == TYPE_INCOME)
+    report['vat_expenditures'] = sum(
+        l.vat for l in lines if l.type == TYPE_EXPENDITURE)
+    report['vat_expenditures_fixed_assets'] = sum(
+        l.vat for l in lines if l.category == CATEGORY_EXPENDITURE_FIXED_ASSETS)
+    report['vat_expenditures_without_fixed_assets'] = sum(
+        l.vat for l in lines if l.type == TYPE_EXPENDITURE and \
+            l.category != CATEGORY_EXPENDITURE_FIXED_ASSETS)
 
 
 def autocomplete(request):

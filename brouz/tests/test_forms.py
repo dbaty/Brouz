@@ -76,3 +76,9 @@ class TestClone(TestCase):
         c = self._call_fut(orig, counter)
         self.assertEqual(c.value, 'clone of foo')
         self.assertEqual(c._order, 1 + orig._order)
+
+
+class TestCategories(TestCase):
+
+    def test_categories_do_not_overlap(self):
+        pass  # FIXME: test that category values are all unique

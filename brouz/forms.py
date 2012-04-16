@@ -26,6 +26,7 @@ from brouz.models import CATEGORY_EXPENDITURE_CET
 from brouz.models import CATEGORY_EXPENDITURE_CONFERENCES
 from brouz.models import CATEGORY_EXPENDITURE_DEDUCTIBLE_CSG
 from brouz.models import CATEGORY_EXPENDITURE_FIXED_ASSETS
+from brouz.models import CATEGORY_EXPENDITURE_HARDWARE_FURNITURE_RENTAL
 from brouz.models import CATEGORY_EXPENDITURE_INSURANCE_PREMIUM
 from brouz.models import CATEGORY_EXPENDITURE_NON_DEDUCTIBLE_CSG
 from brouz.models import CATEGORY_EXPENDITURE_OBLIGATORY_SOCIAL_CHARGES
@@ -39,7 +40,10 @@ from brouz.models import CATEGORY_EXPENDITURE_TRAVEL_EXPENSES
 from brouz.models import CATEGORY_EXPENDITURE_VAT
 from brouz.models import CATEGORY_INCOME_MISC
 from brouz.models import CATEGORY_REMUNERATION
-from brouz.models import PAYMENT_MEANS
+from brouz.models import PAYMENT_MEAN_CHECK
+from brouz.models import PAYMENT_MEAN_CREDIT_CARD
+from brouz.models import PAYMENT_MEAN_DIRECT_DEBIT
+from brouz.models import PAYMENT_MEAN_WIRE_TRANSFER
 
 
 CATEGORIES = (
@@ -74,9 +78,19 @@ CATEGORIES = (
              (str(CATEGORY_EXPENDITURE_BANKING_CHARGES),
               _('Banking charges')),
              (str(CATEGORY_EXPENDITURE_FIXED_ASSETS),
-              _('Fixed assets'))),
+              _('Fixed assets')),
+             (str(CATEGORY_EXPENDITURE_HARDWARE_FURNITURE_RENTAL),
+              _('Hardware and furniture rental'))),
     (str(CATEGORY_REMUNERATION), _('Remuneration')),
     )
+
+
+PAYMENT_MEANS = (('', _('Select the payment mean...')),
+                 (str(PAYMENT_MEAN_CREDIT_CARD), _('Credit card')),
+                 (str(PAYMENT_MEAN_WIRE_TRANSFER), _('Wire transfer')),
+                 (str(PAYMENT_MEAN_CHECK), _('Check')),
+                 (str(PAYMENT_MEAN_DIRECT_DEBIT), _('Direct debit'))
+                 )
 
 
 def clone(node, counter):
@@ -116,7 +130,8 @@ class _Line(Schema):
                         widget=TextInputWidget(size=8))
     vat = SchemaNode(PermissiveFloat(),
                      title=_('VAT'),
-                     missing=0.0, widget=TextInputWidget(size=8))
+                     missing=0.0,
+                     widget=TextInputWidget(size=8))
 
 
 class _Lines(SequenceSchema):
@@ -166,15 +181,24 @@ class UniqueTransactionSchema(CSRFSchema):
     invoice = clone(CompositeTransactionSchema.invoice, __counter)
 
 
-def make_unique_transaction_form(request, button_title):
-    schema = UniqueTransactionSchema().bind(request=request)
-    return Form(schema,
-                action=request.route_url('add-unique'),
-                buttons=(Button(title=button_title), ))
+def make_add_form(request, composite):
+    if composite:
+        schema = CompositeTransactionSchema()
+        route_name = 'add-unique'
+    else:
+        schema = UniqueTransactionSchema()
+        route_name = 'add-composite'
+    schema = schema.bind(request=request)
+    return Form(schema, request.route_url(route_name),
+                buttons=(Button(title=_('Add transaction')), ))
 
 
-def make_composite_transaction_form(request, button_title):
-    schema = CompositeTransactionSchema().bind(request=request)
-    return Form(schema,
-                action=request.route_url('add-composite'),
-                buttons=(Button(title=button_title), ))
+def make_edit_form(request, transaction):
+    if transaction.composite:
+        schema = CompositeTransactionSchema()
+    else:
+        schema = UniqueTransactionSchema()
+    schema = schema.bind(request=request)
+    action = request.route_url('edit', transaction_id=transaction.id)
+    return Form(schema, action,
+                buttons=(Button(title=_('Save changes')), ))

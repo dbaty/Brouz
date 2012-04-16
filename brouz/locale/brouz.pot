@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Brouz 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-04-06 19:35+0200\n"
+"POT-Creation-Date: 2012-04-16 17:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,167 +17,172 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: brouz/forms.py:47
+#: brouz/forms.py:50
 msgid "Select the category..."
 msgstr ""
 
-#: brouz/forms.py:48
+#: brouz/forms.py:51
 msgid "Income"
 msgstr ""
 
-#: brouz/forms.py:49
+#: brouz/forms.py:52
 msgid "Expenditure"
 msgstr ""
 
-#: brouz/forms.py:50
+#: brouz/forms.py:53
 msgid "Purchase"
 msgstr ""
 
-#: brouz/forms.py:51 brouz/forms.py:112
+#: brouz/forms.py:54 brouz/forms.py:132 brouz/templates/reports.pt:133
+#: brouz/templates/reports.pt:161
 msgid "VAT"
 msgstr ""
 
-#: brouz/forms.py:52
+#: brouz/forms.py:55
 msgid "CET"
 msgstr ""
 
-#: brouz/forms.py:54
+#: brouz/forms.py:57
 msgid "Other taxes"
 msgstr ""
 
-#: brouz/forms.py:56
+#: brouz/forms.py:59
 msgid "Deductible CSG"
 msgstr ""
 
-#: brouz/forms.py:58
+#: brouz/forms.py:61
 msgid "Non-deductible CSG"
 msgstr ""
 
-#: brouz/forms.py:60
+#: brouz/forms.py:63
 msgid "Small furniture"
 msgstr ""
 
-#: brouz/forms.py:62
+#: brouz/forms.py:65
 msgid "Insurance premium"
 msgstr ""
 
-#: brouz/forms.py:64
+#: brouz/forms.py:67
 msgid "Travel expenses"
 msgstr ""
 
-#: brouz/forms.py:66
+#: brouz/forms.py:69
 msgid "Obligatory social charges"
 msgstr ""
 
-#: brouz/forms.py:68
+#: brouz/forms.py:71
 msgid "Optional social charges"
 msgstr ""
 
-#: brouz/forms.py:70
+#: brouz/forms.py:73
 msgid "Conferences"
 msgstr ""
 
-#: brouz/forms.py:72
+#: brouz/forms.py:75
 msgid "Office furniture"
 msgstr ""
 
-#: brouz/forms.py:74
+#: brouz/forms.py:77
 msgid "Other miscellaneous expenses"
 msgstr ""
 
-#: brouz/forms.py:76
+#: brouz/forms.py:79
 msgid "Banking charges"
 msgstr ""
 
-#: brouz/forms.py:78
+#: brouz/forms.py:81
 msgid "Fixed assets"
 msgstr ""
 
-#: brouz/forms.py:79
+#: brouz/forms.py:83
+msgid "Hardware and furniture rental"
+msgstr ""
+
+#: brouz/forms.py:84
 msgid "Remuneration"
 msgstr ""
 
-#: brouz/forms.py:101 brouz/templates/home.pt:23
-msgid "Title"
-msgstr ""
-
-#: brouz/forms.py:106
-msgid "Category"
-msgstr ""
-
-#: brouz/forms.py:109 brouz/templates/home.pt:24
-msgid "Amount"
-msgstr ""
-
-#: brouz/forms.py:118
-msgid "Line"
-msgstr ""
-
-#: brouz/forms.py:125 brouz/templates/home.pt:22
-msgid "Party"
-msgstr ""
-
-#: brouz/forms.py:131 brouz/templates/home.pt:21
-msgid "Date"
-msgstr ""
-
-#: brouz/forms.py:134
-msgid "Mean"
-msgstr ""
-
-#: brouz/forms.py:137
-msgid "Invoice number"
-msgstr ""
-
-#: brouz/forms.py:139
-msgid "Lines"
-msgstr ""
-
-#: brouz/forms.py:141
-msgid "Add a line"
-msgstr ""
-
-#: brouz/models.py:52
+#: brouz/forms.py:88
 msgid "Select the payment mean..."
 msgstr ""
 
-#: brouz/models.py:53
+#: brouz/forms.py:89
 msgid "Credit card"
 msgstr ""
 
-#: brouz/models.py:54
+#: brouz/forms.py:90
 msgid "Wire transfer"
 msgstr ""
 
-#: brouz/models.py:55
+#: brouz/forms.py:91
 msgid "Check"
 msgstr ""
 
-#: brouz/models.py:56
+#: brouz/forms.py:92
 msgid "Direct debit"
 msgstr ""
 
-#: brouz/views.py:50 brouz/views.py:58 brouz/views.py:74 brouz/views.py:82
+#: brouz/forms.py:121 brouz/templates/home.pt:23 brouz/templates/reports.pt:158
+msgid "Title"
+msgstr ""
+
+#: brouz/forms.py:126
+msgid "Category"
+msgstr ""
+
+#: brouz/forms.py:129 brouz/templates/home.pt:24 brouz/templates/reports.pt:160
+msgid "Amount"
+msgstr ""
+
+#: brouz/forms.py:139
+msgid "Line"
+msgstr ""
+
+#: brouz/forms.py:147 brouz/templates/home.pt:22
+msgid "Party"
+msgstr ""
+
+#: brouz/forms.py:153 brouz/templates/home.pt:21 brouz/templates/reports.pt:159
+msgid "Date"
+msgstr ""
+
+#: brouz/forms.py:156
+msgid "Mean"
+msgstr ""
+
+#: brouz/forms.py:159
+msgid "Invoice number"
+msgstr ""
+
+#: brouz/forms.py:161
+msgid "Lines"
+msgstr ""
+
+#: brouz/forms.py:163
+msgid "Add a line"
+msgstr ""
+
+#: brouz/forms.py:193
 msgid "Add transaction"
 msgstr ""
 
-#: brouz/views.py:68 brouz/views.py:114
-msgid "The transaction has been added."
-msgstr ""
-
-#: brouz/views.py:125 brouz/views.py:129 brouz/views.py:144 brouz/views.py:146
+#: brouz/forms.py:204
 msgid "Save changes"
 msgstr ""
 
-#: brouz/views.py:157
+#: brouz/views.py:73 brouz/views.py:119
+msgid "The transaction has been added."
+msgstr ""
+
+#: brouz/views.py:161
 msgid "The transaction has been modified."
 msgstr ""
 
-#: brouz/views.py:164
+#: brouz/views.py:168
 msgid "You did not confirm that you want to delete this transaction."
 msgstr ""
 
-#: brouz/views.py:172
+#: brouz/views.py:177
 msgid "The transaction has been deleted."
 msgstr ""
 
@@ -223,8 +228,8 @@ msgstr ""
 msgid "report_aa"
 msgstr ""
 
-#: brouz/templates/reports.pt:26 brouz/templates/reports.pt:119
-#: brouz/templates/reports.pt:156
+#: brouz/templates/reports.pt:26 brouz/templates/reports.pt:125
+#: brouz/templates/reports.pt:184 brouz/templates/reports.pt:224
 msgid "Total"
 msgstr ""
 
@@ -258,72 +263,127 @@ msgstr ""
 msgid "report_bv"
 msgstr ""
 
-#. Default: Small furniture
+#. Default: BG
 #: brouz/templates/reports.pt:64
+msgid "report_hardware_rental"
+msgstr ""
+
+#. Default: Small furniture
+#: brouz/templates/reports.pt:70
 msgid "report_small_furniture"
 msgstr ""
 
 #. Default: Insurance premium
-#: brouz/templates/reports.pt:70
+#: brouz/templates/reports.pt:76
 msgid "report_insurance_premium"
 msgstr ""
 
 #. Default: Other travel expenses
-#: brouz/templates/reports.pt:74
+#: brouz/templates/reports.pt:80
 msgid "report_travel_expenses"
 msgstr ""
 
-#: brouz/templates/reports.pt:81
+#: brouz/templates/reports.pt:87
 msgid "Social charges"
 msgstr ""
 
 #. Default: obligatory
-#: brouz/templates/reports.pt:82
+#: brouz/templates/reports.pt:88
 msgid "report_social_charges_obligatory"
 msgstr ""
 
 #. Default: optional
-#: brouz/templates/reports.pt:87
+#: brouz/templates/reports.pt:93
 msgid "report_social_charges_optional"
 msgstr ""
 
 #. Default: total
-#: brouz/templates/reports.pt:92
+#: brouz/templates/reports.pt:98
 msgid "report_social_charges_total"
 msgstr ""
 
 #. Default: Conferences
-#: brouz/templates/reports.pt:98
+#: brouz/templates/reports.pt:104
 msgid "report_conferences"
 msgstr ""
 
 #. Default: Office
-#: brouz/templates/reports.pt:104
+#: brouz/templates/reports.pt:110
 msgid "report_office"
 msgstr ""
 
 #. Default: Other expenses
-#: brouz/templates/reports.pt:108
+#: brouz/templates/reports.pt:114
 msgid "report_other_expenses"
 msgstr ""
 
 #. Default: BN
-#: brouz/templates/reports.pt:113
+#: brouz/templates/reports.pt:119
 msgid "report_bn"
 msgstr ""
 
+#. Default: .
+#: brouz/templates/reports.pt:136
+msgid "report_vat_incomes"
+msgstr ""
+
+#. Default: .
+#: brouz/templates/reports.pt:140
+msgid "report_vat_expenditures"
+msgstr ""
+
+#. Default: .
+#: brouz/templates/reports.pt:144
+msgid "report_vat_expenditures_fixed_assets"
+msgstr ""
+
+#. Default: .
+#: brouz/templates/reports.pt:148
+msgid "report_vat_expenditures_without_fixed_assets"
+msgstr ""
+
+#. Default: Fixed assets
+#: brouz/templates/reports.pt:155
+msgid "report_caption_fixed_assets"
+msgstr ""
+
+#. Default: .
+#: brouz/templates/reports.pt:162
+msgid "report_base_amortissable"
+msgstr ""
+
+#. Default: .
+#: brouz/templates/reports.pt:163
+msgid "report_mode_taux_amortissement"
+msgstr ""
+
+#. Default: .
+#: brouz/templates/reports.pt:164
+msgid "report_montant_amortissements"
+msgstr ""
+
+#. Default: .
+#: brouz/templates/reports.pt:167
+msgid "report_montant_amortissements_anterieurs"
+msgstr ""
+
+#. Default: .
+#: brouz/templates/reports.pt:168
+msgid "report_montant_amortissements_annee"
+msgstr ""
+
 #. Default: Clients
-#: brouz/templates/reports.pt:129
+#: brouz/templates/reports.pt:197
 msgid "report_caption_clients"
 msgstr ""
 
 #. Default: Providers
-#: brouz/templates/reports.pt:139
+#: brouz/templates/reports.pt:207
 msgid "report_caption_providers"
 msgstr ""
 
 #. Default: Remuneration
-#: brouz/templates/reports.pt:149
+#: brouz/templates/reports.pt:217
 msgid "report_caption_remuneration"
 msgstr ""
 

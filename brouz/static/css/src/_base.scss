@@ -50,15 +50,3 @@ a img {
 .nowrap {
     white-space: nowrap;
 }
-
-.three-columns-reports > table {
-    /* The total width is 1000px. */
-    float: left;
-    width: 329px;
-    margin-right: 5px;
-}
-
-.three-columns-reports > table:last-child {
-    width: 332px;
-    margin-right: 0;
-}

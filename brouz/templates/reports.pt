@@ -61,6 +61,12 @@
     </tr>
 
     <tr>
+      <td colspan="2" i18n:translate="report_hardware_rental">BG</td>
+      <td>BG</td>
+      <td tal:content="api.format_num(report['bg'])"/>
+    </tr>
+
+    <tr>
       <td i18n:translate="report_small_furniture">Small furniture</td>
       <td tal:content="api.format_num(report['bh_small_furniture'])"/>
       <td rowspan="2">BH</td>
@@ -123,8 +129,74 @@
   </tbody>
 </table>
 
+<table class="report">
+  <caption i18n:translate="">VAT</caption>
+  <tbody>
+    <tr>
+      <td i18n:translate="report_vat_incomes">.</td>
+      <td>CX</td>
+      <td tal:content="api.format_num(report['vat_incomes'])"/>
+    </tr>
+    <tr>
+      <td i18n:translate="report_vat_expenditures">.</td>
+      <td>-</td>
+      <td tal:content="api.format_num(report['vat_expenditures'])"/>
+    </tr>
+    <tr>
+      <td i18n:translate="report_vat_expenditures_fixed_assets">.</td>
+      <td>-</td>
+      <td tal:content="api.format_num(report['vat_expenditures_fixed_assets'])"/>
+    </tr>
+    <tr>
+      <td i18n:translate="report_vat_expenditures_without_fixed_assets">.</td>
+      <td>CY</td>
+      <td tal:content="api.format_num(report['vat_expenditures_without_fixed_assets'])"/>
+    </tr>
+  </tbody>
+</table>
 
-<div class="tdree-columns-reports">
+<table class="report">
+  <caption i18n:translate="report_caption_fixed_assets">Fixed assets</caption>
+  <thead>
+    <tr>
+      <th rowspan="2" i18n:translate="">Title</th>
+      <th rowspan="2" i18n:translate="">Date</th>
+      <th rowspan="2" i18n:translate="">Amount</th>
+      <th rowspan="2" i18n:translate="">VAT</th>
+      <th rowspan="2" i18n:translate="report_base_amortissable">.</th>
+      <th rowspan="2" i18n:translate="report_mode_taux_amortissement">.</th>
+      <th colspan="2" i18n:translate="report_montant_amortissements">.</th>
+    </tr>
+    <tr>
+      <th i18n:translate="report_montant_amortissements_anterieurs">.</th>
+      <th i18n:translate="report_montant_amortissements_annee">.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr tal:repeat="asset report['fixed_assets']['assets']">
+      <td tal:content="asset['title']"/>
+      <td tal:content="api.format_date(asset['date'])" class="nowrap"/>
+      <td tal:content="api.format_num(asset['amount'])"/>
+      <td tal:content="api.format_num(asset['vat'])"/>
+      <td tal:content="api.format_num(asset['base'])"/>
+      <td>L (33,33%)</td>
+      <td tal:content="api.format_num(asset['past'])"/>
+      <td tal:content="api.format_num(asset['this_year'])"/>
+    </tr>
+  </tbody>
+  <tr class="total">
+    <th i18n:translate="">Total</th>
+    <td></td>
+    <td tal:content="api.format_num(report['fixed_assets']['total_amount'])"/>
+    <td></td>
+    <td tal:content="api.format_num(report['fixed_assets']['total_base'])"/>
+    <td></td>
+    <td tal:content="api.format_num(report['fixed_assets']['total_past'])"/>
+    <td tal:content="api.format_num(report['fixed_assets']['total_this_year'])"/>
+  </tr>
+</table>
+
+<div class="three-columns-reports">
   <table class="report">
     <caption i18n:translate="report_caption_clients">Clients</caption>
     <tbody>

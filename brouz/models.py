@@ -14,8 +14,6 @@ from sqlalchemy.orm import sessionmaker
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
-from brouz.i18n import _
-
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 metadata = MetaData()
@@ -43,18 +41,13 @@ CATEGORY_EXPENDITURE_OFFICE_FURNITURE = 14
 CATEGORY_EXPENDITURE_OTHER_MISC_EXPENSES = 15
 CATEGORY_EXPENDITURE_BANKING_CHARGES = 16
 CATEGORY_EXPENDITURE_FIXED_ASSETS = 17
+CATEGORY_EXPENDITURE_HARDWARE_FURNITURE_RENTAL = 19
 CATEGORY_REMUNERATION = 18
 
 PAYMENT_MEAN_CREDIT_CARD = 1
 PAYMENT_MEAN_WIRE_TRANSFER = 2
 PAYMENT_MEAN_CHECK = 3
 PAYMENT_MEAN_DIRECT_DEBIT = 4
-PAYMENT_MEANS = (('', _('Select the payment mean...')),
-                 (str(PAYMENT_MEAN_CREDIT_CARD), _('Credit card')),
-                 (str(PAYMENT_MEAN_WIRE_TRANSFER), _('Wire transfer')),
-                 (str(PAYMENT_MEAN_CHECK), _('Check')),
-                 (str(PAYMENT_MEAN_DIRECT_DEBIT), _('Direct debit'))
-                 )
 
 
 class Transaction(object):

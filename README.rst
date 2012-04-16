@@ -66,6 +66,46 @@ j'avais besoin. Cependant, ajouter d'autres catégories devraient être
 relativement simple (cf. ``brouz/models.py``).
 
 
+Choix (FIXME: changer le titre)
+=====
+
+1. Brouz est prévu pour un résultat déterminé d'après les règles «
+   recettes-dépenses » avec une comptabilité tenue taxe incluse.
+
+2. La durée (3 ans) et le mode (linéaire) d'amortissement (et donc le
+   taux d'amortissement de 33,33%) des immobilisations n'est pas
+   modifiable.
+
+
+
+Notes
+=====
+
+Cotisations URSSAF
+------------------
+
+1. Le calcul de la part de CSG déductible se fait ainsi ::
+
+       <CSG déductible> = <montant total CRDS/CSG> * 5,1 / 8
+
+2. Répartition des cotisations sociales (en 2011) :
+
+   - allocations familiales : 5,4% du revenu ;
+
+   - CRDS + CSG : 8% de la somme du revenu et des cotisations sociales
+     obligatoires de l'année précédente.
+
+3. Les différentes "parties" des cotisations sont ventilées comme suit :
+
+  - CSG déductible : BV
+
+  - CRDS / CSG non-déductible : non reportée
+
+  - allocations familiales : charges sociales personnelles obligatoires (BT)
+
+  - formation professionnelle : autres impôts
+
+
 Licence
 =======
 
