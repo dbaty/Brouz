@@ -26,7 +26,7 @@ setup(name='Brouz',
       classifiers=(
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
-        'Framework :: Pylons',
+        'Framework :: Pyramid',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python',
         'Natural Language :: English',
