@@ -57,8 +57,11 @@ def calculate_amortization(asset):
 
     This function returns a tuple of amortizations starting from
     ``asset.date``.
+
+    ``amount`` is rounded because this is how it should be displayed
+    in the paper form.
     """
-    base = asset.amount - asset.vat
+    base = int(round(asset.amount - asset.vat))
     amortization = []
     # The rate is fixed, the amortization is linear.
     n_years = 3
@@ -66,11 +69,11 @@ def calculate_amortization(asset):
     prorata = (360 - (30 * (asset.date.month - 1) + asset.date.day - 1)) / 360.0
     while rest > 0:
         amount = (prorata * base) / n_years
-        amount = round(amount, 2)
+        amount = int(round(amount))
         # only applicable for the first year when it is not complete
-        prorata = 1.0 
+        prorata = 1.0
         if rest <= amount:
-            amount = rest
+            amount = int(round(rest))
         rest -= amount
         rest = round(rest, 2)
         amortization.append(amount)
@@ -83,5 +86,5 @@ def calculate_amortization(asset):
     if amortization[-1] <= 1:
         last = amortization.pop(-1)
         amortization[-1] += last
-    assert round(sum(amortization), 2) == round(base, 2)
+    assert sum(amortization) == base
     return tuple(amortization)
