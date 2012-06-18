@@ -12,8 +12,8 @@ license, a copy of which is included in the source.
 Documentation en français
 =========================
 
-**État du code :** fonctionnel mais pas encore complètement testé en
-« situation réelle ».
+**État du code :** fonctionnel mais encore peu testé en « situation
+réelle ».
 
 Brouz est une application web permettant de lister les recettes et
 dépenses, en les ventilant par catégorie. L'objectif est de faciliter
@@ -66,8 +66,8 @@ j'avais besoin. Cependant, ajouter d'autres catégories devraient être
 relativement simple (cf. ``brouz/models.py``).
 
 
-Choix (FIXME: changer le titre)
-=====
+Contraintes
+===========
 
 1. Brouz est prévu pour un résultat déterminé d'après les règles «
    recettes-dépenses » avec une comptabilité tenue taxe incluse.
