@@ -12,6 +12,7 @@ from brouz.models import CATEGORY_EXPENDITURE_BANKING_CHARGES
 from brouz.models import CATEGORY_EXPENDITURE_CET
 from brouz.models import CATEGORY_EXPENDITURE_CONFERENCES
 from brouz.models import CATEGORY_EXPENDITURE_DEDUCTIBLE_CSG
+from brouz.models import CATEGORY_EXPENDITURE_FEES_NO_RETROCESSION
 from brouz.models import CATEGORY_EXPENDITURE_FIXED_ASSETS
 from brouz.models import CATEGORY_EXPENDITURE_HARDWARE_FURNITURE_RENTAL
 from brouz.models import CATEGORY_EXPENDITURE_INSURANCE_PREMIUM
@@ -41,12 +42,16 @@ def home(request):
     lines = lines.order_by(Transaction.date,
                            Transaction.party,
                            Transaction.title)
+    balances = [24949.78]
+    for line in lines:
+        balances.append(balances[-1] + line.signed_amount)
     balance = sum(line.signed_amount for line in lines)
     # FIXME: paginate
     api = TemplateAPI(request, 'home')
     bindings = {'api': api,
                 'lines': lines,
-                'balance': balance}
+                'balance': balance,
+                'balances': balances}
     return render_to_response('templates/home.pt', bindings)
 
 
@@ -173,6 +178,8 @@ def delete(request):
     session = DBSession()
     transaction = session.query(Transaction).\
         filter_by(id=transaction_id).one()
+    # FIXME: If transaction is composite, we should delete the related
+    # transactions: filter_by(part_of=transaction_id)
     session.delete(transaction)
     request.session.flash(_('The transaction has been deleted.'), 'success')
     return HTTPSeeOther(request.route_url('home'))
@@ -234,8 +241,16 @@ def reports(request):
 def _calculate_report(lines):
     # Les commentaires correspondent aux intitules exacts de la
     # declaration 2035-1K (2012).
-    _get_sum_of_lines = lambda lines, category: sum(
-        line.amount for line in lines if line.category == category)
+    def _get_sum_of_lines(lines, category):  # FIXME: DEBUG ONLY
+        total = 0
+        for line in lines:
+            if line.category == category:
+                total += line.amount
+#                if category == CATEGORY_EXPENDITURE_OTHER_TAXES:
+#                    print line.title, line.amount
+        return total
+#    _get_sum_of_lines = lambda lines, category: sum(
+#        line.amount for line in lines if line.category == category)
     # Recettes encaissees y compris les remboursements de frais
     aa = _get_sum_of_lines(lines, CATEGORY_INCOME_MISC)
     total_income = aa
@@ -260,8 +275,11 @@ def _calculate_report(lines):
     # Primes d'assurance
     bh_insurance_premium = _get_sum_of_lines(
         lines, CATEGORY_EXPENDITURE_INSURANCE_PREMIUM)
+    # Honoraires ne constituant pas des retrocessions
+    bh_fees_no_retrocession = _get_sum_of_lines(
+        lines, CATEGORY_EXPENDITURE_FEES_NO_RETROCESSION)
     # Total : travaux, fournitures et services exterieurs
-    bh = bh_small_furniture + bh_insurance_premium
+    bh = bh_small_furniture + bh_insurance_premium + bh_fees_no_retrocession
     # Autres frais de deplacements (voyages...)
     bj_travel_expenses = _get_sum_of_lines(
         lines, CATEGORY_EXPENDITURE_TRAVEL_EXPENSES)
@@ -296,6 +314,7 @@ def _calculate_report(lines):
               'bs': bs,
               'bv': bv,
               'bh_small_furniture': bh_small_furniture,
+              'bh_fees_no_retrocession': bh_fees_no_retrocession,
               'bh_insurance_premium': bh_insurance_premium,
               'bg': bg,
               'bh': bh,

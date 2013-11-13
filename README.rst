@@ -25,7 +25,7 @@ vous vous engagez à :
 
 - ne pas me poursuivre en justice ou dans la rue si l'administration
   fiscale mange votre chien et confisque votre Lamborghini à cause
-  d'une erreur de calcul dans Brouz;
+  d'une erreur de calcul dans Brouz ;
 
 - m'envoyer un petit mot si l'application vous est utile, si vous avez
   corrigé des erreurs (notamment dans la logique de calcul des
@@ -97,13 +97,13 @@ Cotisations URSSAF
 
 3. Les différentes "parties" des cotisations sont ventilées comme suit :
 
-  - CSG déductible : BV
+  - CSG déductible : BV ;
 
-  - CRDS / CSG non-déductible : non reportée
+  - CRDS / CSG non-déductible : non reportée ;
 
-  - allocations familiales : charges sociales personnelles obligatoires (BT)
+  - allocations familiales : charges sociales personnelles obligatoires (BT) ;
 
-  - formation professionnelle : autres impôts
+  - formation professionnelle : autres impôts.
 
 
 Licence

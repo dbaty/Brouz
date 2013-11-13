@@ -25,6 +25,7 @@ from brouz.models import CATEGORY_EXPENDITURE_BANKING_CHARGES
 from brouz.models import CATEGORY_EXPENDITURE_CET
 from brouz.models import CATEGORY_EXPENDITURE_CONFERENCES
 from brouz.models import CATEGORY_EXPENDITURE_DEDUCTIBLE_CSG
+from brouz.models import CATEGORY_EXPENDITURE_FEES_NO_RETROCESSION
 from brouz.models import CATEGORY_EXPENDITURE_FIXED_ASSETS
 from brouz.models import CATEGORY_EXPENDITURE_HARDWARE_FURNITURE_RENTAL
 from brouz.models import CATEGORY_EXPENDITURE_INSURANCE_PREMIUM
@@ -61,6 +62,8 @@ CATEGORIES = (
               _('Non-deductible CSG')),
              (str(CATEGORY_EXPENDITURE_SMALL_FURNITURE),
               _('Small furniture')),
+             (str(CATEGORY_EXPENDITURE_FEES_NO_RETROCESSION),
+              _('Fees that are not retrocessions')),
              (str(CATEGORY_EXPENDITURE_INSURANCE_PREMIUM),
               _('Insurance premium')),
              (str(CATEGORY_EXPENDITURE_TRAVEL_EXPENSES),
@@ -184,10 +187,10 @@ class UniqueTransactionSchema(CSRFSchema):
 def make_add_form(request, composite):
     if composite:
         schema = CompositeTransactionSchema()
-        route_name = 'add-unique'
+        route_name = 'add-composite'
     else:
         schema = UniqueTransactionSchema()
-        route_name = 'add-composite'
+        route_name = 'add-unique'
     schema = schema.bind(request=request)
     return Form(schema, request.route_url(route_name),
                 buttons=(Button(title=_('Add transaction')), ))

@@ -69,8 +69,12 @@
     <tr>
       <td i18n:translate="report_small_furniture">Small furniture</td>
       <td tal:content="api.format_num(report['bh_small_furniture'])"/>
-      <td rowspan="2">BH</td>
-      <td rowspan="2" tal:content="api.format_num(report['bh'])"/>
+      <td rowspan="3">BH</td>
+      <td rowspan="3" tal:content="api.format_num(report['bh'])"/>
+    </tr>
+    <tr>
+      <td i18n:translate="report_fees_no_retrocession">Fees that are not retrocessions</td>
+      <td tal:content="api.format_num(report['bh_fees_no_retrocession'])"/>
     </tr>
     <tr>
       <td i18n:translate="report_insurance_premium">Insurance premium</td>
@@ -227,6 +231,7 @@
       <tr class="total">
         <td i18n:translate="">Total</td>
         <td tal:content="api.format_num(report['total_remuneration'])"></td>
+      </tr>
     </tbody>
   </table>
 </div>
