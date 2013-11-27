@@ -19,13 +19,13 @@
     <tr>
       <td i18n:translate="report_aa">AA</td>
       <td>AA/AD</td>
-      <td tal:content="api.format_num(report['aa'])"/>
+      <td tal:content="report['aa']"/>
     </tr>
 
     <tr class="total">
       <td i18n:translate="">Total</td>
       <td>AG</td>
-      <td tal:content="api.format_num(report['total_income'])"/>
+      <td tal:content="report['total_income']"/>
     </tr>
   </tbody>
 </table>
@@ -36,99 +36,99 @@
     <tr>
       <td colspan="2" i18n:translate="report_ba">BA</td>
       <td>BA</td>
-      <td tal:content="api.format_num(report['ba'])"/>
+      <td tal:content="report['ba']"/>
     </tr>
     <tr>
       <td rowspan="4">Taxes</td>
       <td i18n:translate="report_bd">BD</td>
       <td>BD</td>
-      <td tal:content="api.format_num(report['bd'])"/>
+      <td tal:content="report['bd']"/>
     </tr>
     <tr>
       <td i18n:translate="report_jy">JY</td>
       <td>JY</td>
-      <td tal:content="api.format_num(report['jy'])"/>
+      <td tal:content="report['jy']"/>
     </tr>
     <tr>
       <td i18n:translate="report_bs">BS</td>
       <td>BS</td>
-      <td tal:content="api.format_num(report['bs'])"/>
+      <td tal:content="report['bs']"/>
     </tr>
     <tr>
       <td i18n:translate="report_bv">BV</td>
       <td>BV</td>
-      <td tal:content="api.format_num(report['bv'])"/>
+      <td tal:content="report['bv']"/>
     </tr>
 
     <tr>
       <td colspan="2" i18n:translate="report_hardware_rental">BG</td>
       <td>BG</td>
-      <td tal:content="api.format_num(report['bg'])"/>
+      <td tal:content="report['bg']"/>
     </tr>
 
     <tr>
       <td i18n:translate="report_small_furniture">Small furniture</td>
-      <td tal:content="api.format_num(report['bh_small_furniture'])"/>
+      <td tal:content="report['bh_small_furniture']"/>
       <td rowspan="3">BH</td>
-      <td rowspan="3" tal:content="api.format_num(report['bh'])"/>
+      <td rowspan="3" tal:content="report['bh']"/>
     </tr>
     <tr>
       <td i18n:translate="report_fees_no_retrocession">Fees that are not retrocessions</td>
-      <td tal:content="api.format_num(report['bh_fees_no_retrocession'])"/>
+      <td tal:content="report['bh_fees_no_retrocession']"/>
     </tr>
     <tr>
       <td i18n:translate="report_insurance_premium">Insurance premium</td>
-      <td tal:content="api.format_num(report['bh_insurance_premium'])"/>
+      <td tal:content="report['bh_insurance_premium']"/>
     </tr>
     <tr>
       <td i18n:translate="report_travel_expenses">Other travel expenses</td>
-      <td tal:content="api.format_num(report['bj_travel_expenses'])"/>
+      <td tal:content="report['bj_travel_expenses']"/>
       <td>BJ</td>
-      <td tal:content="api.format_num(report['bj'])"/>
+      <td tal:content="report['bj']"/>
     </tr>
 
     <tr>
       <td rowspan="3" i18n:translate="">Social charges</td>
       <td i18n:translate="report_social_charges_obligatory">obligatory</td>
       <td>BT</td>
-      <td tal:content="api.format_num(report['bt'])"/>
+      <td tal:content="report['bt']"/>
     </tr>
     <tr>
       <td i18n:translate="report_social_charges_optional">optional</td>
       <td>BU</td>
-      <td tal:content="api.format_num(report['bu'])"/>
+      <td tal:content="report['bu']"/>
     </tr>
     <tr>
       <td i18n:translate="report_social_charges_total">total</td>
       <td>BK</td>
-      <td tal:content="api.format_num(report['bk'])"/>
+      <td tal:content="report['bk']"/>
     </tr>
 
     <tr>
       <td i18n:translate="report_conferences">Conferences</td>
-      <td tal:content="api.format_num(report['bm_conferences'])"/>
+      <td tal:content="report['bm_conferences']"/>
       <td rowspan="3">BM</td>
-      <td rowspan="3" tal:content="api.format_num(report['bm'])"/>
+      <td rowspan="3" tal:content="report['bm']"/>
     </tr>
     <tr>
       <td i18n:translate="report_office">Office</td>
-      <td tal:content="api.format_num(report['bm_office'])"/>
+      <td tal:content="report['bm_office']"/>
     </tr>
     <tr>
       <td i18n:translate="report_other_expenses">Other expenses</td>
-      <td tal:content="api.format_num(report['bm_other'])"/>
+      <td tal:content="report['bm_other']"/>
     </tr>
 
     <tr>
       <td colspan="2" i18n:translate="report_bn">BN</td>
       <td>BN</td>
-      <td tal:content="api.format_num(report['bn'])"/>
+      <td tal:content="report['bn']"/>
     </tr>
 
     <tr class="total">
       <td colspan="2" i18n:translate="">Total</td>
       <td>BR</td>
-      <td tal:content="api.format_num(report['total_expenditure'])"/>
+      <td tal:content="report['total_expenditure']"/>
     </tr>
   </tbody>
 </table>
@@ -139,22 +139,42 @@
     <tr>
       <td i18n:translate="report_vat_incomes">.</td>
       <td>CX</td>
-      <td tal:content="api.format_num(report['vat_incomes'])"/>
+      <td tal:content="report['vat_incomes']"/>
     </tr>
     <tr>
       <td i18n:translate="report_vat_expenditures">.</td>
       <td>-</td>
-      <td tal:content="api.format_num(report['vat_expenditures'])"/>
+      <td tal:content="report['vat_expenditures']"/>
     </tr>
     <tr>
       <td i18n:translate="report_vat_expenditures_fixed_assets">.</td>
       <td>-</td>
-      <td tal:content="api.format_num(report['vat_expenditures_fixed_assets'])"/>
+      <td tal:content="report['vat_expenditures_fixed_assets']"/>
     </tr>
     <tr>
       <td i18n:translate="report_vat_expenditures_without_fixed_assets">.</td>
       <td>CY</td>
-      <td tal:content="api.format_num(report['vat_expenditures_without_fixed_assets'])"/>
+      <td tal:content="report['vat_expenditures_without_fixed_assets']"/>
+    </tr>
+  </tbody>
+</table>
+
+<table class="report">
+  <caption i18n:translate="">VAT installments</caption>
+  <thead>
+    <tr>
+      <th></th>
+      <th i18n:translate="">Billed VAT</th>
+      <th i18n:translate="">Deductible VAT</th>
+      <th i18n:translate="">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr tal:repeat="installment report['vat_installments']">
+      <td tal:content="installment['label']"/>
+      <td tal:content="installment['billed']"/>
+      <td tal:content="installment['deductible']"/>
+      <td tal:content="installment['total']"/>
     </tr>
   </tbody>
 </table>
@@ -180,23 +200,23 @@
     <tr tal:repeat="asset report['fixed_assets']['assets']">
       <td tal:content="asset['title']"/>
       <td tal:content="api.format_date(asset['date'])" class="nowrap"/>
-      <td tal:content="api.format_num(asset['amount'])"/>
-      <td tal:content="api.format_num(asset['vat'])"/>
-      <td tal:content="api.format_num(asset['base'])"/>
+      <td tal:content="asset['amount']"/>
+      <td tal:content="asset['vat']"/>
+      <td tal:content="asset['base']"/>
       <td>L (33,33%)</td>
-      <td tal:content="api.format_num(asset['past'])"/>
-      <td tal:content="api.format_num(asset['this_year'])"/>
+      <td tal:content="asset['past']"/>
+      <td tal:content="asset['this_year']"/>
     </tr>
   </tbody>
   <tr class="total">
     <th i18n:translate="">Total</th>
     <td></td>
-    <td tal:content="api.format_num(report['fixed_assets']['total_amount'])"/>
+    <td tal:content="report['fixed_assets']['total_amount']"/>
     <td></td>
-    <td tal:content="api.format_num(report['fixed_assets']['total_base'])"/>
+    <td tal:content="report['fixed_assets']['total_base']"/>
     <td></td>
-    <td tal:content="api.format_num(report['fixed_assets']['total_past'])"/>
-    <td tal:content="api.format_num(report['fixed_assets']['total_this_year'])"/>
+    <td tal:content="report['fixed_assets']['total_past']"/>
+    <td tal:content="report['fixed_assets']['total_this_year']"/>
   </tr>
 </table>
 
@@ -206,7 +226,7 @@
     <tbody>
       <tr tal:repeat="client report['clients']">
         <td tal:content="client[0]"/>
-        <td tal:content="api.format_num(client[1])"/>
+        <td tal:content="client[1]"/>
       </tr>
     </tbody>
   </table>
@@ -216,7 +236,7 @@
     <tbody>
       <tr tal:repeat="provider report['providers']">
         <td tal:content="provider[0]"/>
-        <td tal:content="api.format_num(provider[1])"/>
+        <td tal:content="provider[1]"/>
       </tr>
     </tbody>
   </table>
@@ -225,12 +245,12 @@
     <caption i18n:translate="report_caption_remuneration">Remuneration</caption>
     <tbody>
       <tr tal:repeat="remun report['remuneration']">
-        <td tal:content="api.format_date(remun.date)"/>
-        <td tal:content="api.format_num(remun.amount)"/>
+        <td tal:content="api.format_date(remun[0])"/>
+        <td tal:content="remun[1]"/>
       </tr>
       <tr class="total">
         <td i18n:translate="">Total</td>
-        <td tal:content="api.format_num(report['total_remuneration'])"></td>
+        <td tal:content="report['total_remuneration']"></td>
       </tr>
     </tbody>
   </table>

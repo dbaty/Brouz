@@ -29,15 +29,15 @@ class TestAddUnique(TestCaseForViews):
 
     def test_add_unique_basics(self):
         from datetime import date
+        from brouz import enums
         from brouz.models import CATEGORY_EXPENDITURE_PURCHASE
         from brouz.models import PAYMENT_MEAN_CREDIT_CARD
         from brouz.models import Transaction
-        from brouz.models import TYPE_EXPENDITURE
         post = {'party': u'Party',
                 'title': u'Title',
                 'date': '2011-01-01',
                 'category': unicode(CATEGORY_EXPENDITURE_PURCHASE),
-                'amount': '1234.56',
+                'net_amount': '1234.56',
                 'vat': '123.45',
                 'mean': unicode(PAYMENT_MEAN_CREDIT_CARD),
                 'invoice': u'INVOICE-01'}
@@ -52,9 +52,9 @@ class TestAddUnique(TestCaseForViews):
         self.assertEqual(t.date, date(2011, 1, 1))
         self.assertEqual(t.year, 2011)
         self.assertEqual(t.category, int(post['category']))
-        self.assertEqual(t.type, TYPE_EXPENDITURE)
-        self.assertEqual(t.amount, float(post['amount']))
-        self.assertEqual(t.vat, float(post['vat']))
+        self.assertEqual(t.type, enums.TYPE_EXPENDITURE)
+        self.assertEqual(t.net_amount, 123456)
+        self.assertEqual(t.vat, 12345)
         self.assertEqual(t.mean, int(post['mean']))
         self.assertEqual(t.invoice, post['invoice'])
         self.assertEqual(t.composite, False)
@@ -73,11 +73,11 @@ class TestAddComposite(TestCaseForViews):
 
     def test_add_composite_basics(self):
         from datetime import date
+        from brouz import enums
         from brouz.models import CATEGORY_EXPENDITURE_PURCHASE
         from brouz.models import CATEGORY_EXPENDITURE_SMALL_FURNITURE
         from brouz.models import PAYMENT_MEAN_CREDIT_CARD
         from brouz.models import Transaction
-        from brouz.models import TYPE_EXPENDITURE
         post = (('party', u'Party'),
                 ('title', u'Title of the composite'),
                 ('date', '2011-01-01'),
@@ -87,13 +87,13 @@ class TestAddComposite(TestCaseForViews):
                 ('__start__', 'line:mapping'),
                 ('title', u'Item 1'),
                 ('category', unicode(CATEGORY_EXPENDITURE_PURCHASE)),
-                ('amount', '100.00'),
+                ('net_amount', '100.00'),
                 ('vat', '19.60'),
                 ('__end__', 'line:mapping'),
                 ('__start__', 'line:mapping'),
                 ('title', u'Item 2'),
                 ('category', unicode(CATEGORY_EXPENDITURE_SMALL_FURNITURE)),
-                ('amount', '200.00'),
+                ('net_amount', '200.00'),
                 ('vat', '11.00'),
                 ('__end__', 'line:mapping'),
                 ('__end__', 'lines:sequence'),
@@ -110,21 +110,21 @@ class TestAddComposite(TestCaseForViews):
         self.assertEqual(c.date, date(2011, 1, 1))
         self.assertEqual(c.year, 2011)
         self.assertEqual(c.category, CATEGORY_EXPENDITURE_PURCHASE)
-        self.assertEqual(c.type, TYPE_EXPENDITURE)
-        self.assertEqual(c.amount, 300.0)
-        self.assertEqual(c.vat, 30.60)
+        self.assertEqual(c.type, enums.TYPE_EXPENDITURE)
+        self.assertEqual(c.net_amount, 30000)
+        self.assertEqual(c.vat, 3060)
         self.assertEqual(c.mean, PAYMENT_MEAN_CREDIT_CARD)
         self.assertEqual(c.invoice, u'INVOICE-01')
         t1 = self.session.query(Transaction).filter_by(title=u'Item 1').one()
         self.assertEqual(t1.title, u'Item 1')
         self.assertEqual(t1.category, CATEGORY_EXPENDITURE_PURCHASE)
-        self.assertEqual(t1.amount, 100.0)
-        self.assertEqual(t1.vat, 19.6)
+        self.assertEqual(t1.net_amount, 10000)
+        self.assertEqual(t1.vat, 1960)
         t2 = self.session.query(Transaction).filter_by(title=u'Item 2').one()
         self.assertEqual(t2.title, u'Item 2')
         self.assertEqual(t2.category, CATEGORY_EXPENDITURE_SMALL_FURNITURE)
-        self.assertEqual(t2.amount, 200.0)
-        self.assertEqual(t2.vat, 11.0)
+        self.assertEqual(t2.net_amount, 20000)
+        self.assertEqual(t2.vat, 1100)
         for t in (t1, t2):
             self.assertEqual(t.composite, False)
             self.assertEqual(t.part_of, c.id)
@@ -152,8 +152,9 @@ class TestEditUnique(TestCaseForViews):
                         date=date(2011, 1, 1),
                         year=2011,
                         category=CATEGORY_EXPENDITURE_PURCHASE,
-                        amount=123.45,
-                        vat=12.34,
+                        is_meal=False,
+                        net_amount=12345,
+                        vat=1234,
                         mean=PAYMENT_MEAN_CREDIT_CARD,
                         invoice=u'',
                         composite=0,
@@ -164,17 +165,17 @@ class TestEditUnique(TestCaseForViews):
 
     def test_basics(self):
         from datetime import date
+        from brouz import enums
         from brouz.models import CATEGORY_EXPENDITURE_SMALL_FURNITURE
         from brouz.models import PAYMENT_MEAN_WIRE_TRANSFER
         from brouz.models import Transaction
-        from brouz.models import TYPE_EXPENDITURE
         t = self._make_one()
         matchdict = {'transaction_id': t.id}
         post = {'party': u'Edited party',
                 'title': u'Edited title',
                 'date': u'2012-01-01',
                 'category': unicode(CATEGORY_EXPENDITURE_SMALL_FURNITURE),
-                'amount': u'1234.56',
+                'net_amount': u'1234.56',
                 'vat': u'123.45',
                 'mean': unicode(PAYMENT_MEAN_WIRE_TRANSFER),
                 'invoice': u'INVOICE-01'}
@@ -189,9 +190,9 @@ class TestEditUnique(TestCaseForViews):
         self.assertEqual(t.date, date(2012, 1, 1))
         self.assertEqual(t.year, 2012)
         self.assertEqual(t.category, int(post['category']))
-        self.assertEqual(t.type, TYPE_EXPENDITURE)
-        self.assertEqual(t.amount, float(post['amount']))
-        self.assertEqual(t.vat, float(post['vat']))
+        self.assertEqual(t.type, enums.TYPE_EXPENDITURE)
+        self.assertEqual(t.net_amount, 123456)
+        self.assertEqual(t.vat, 12345)
         self.assertEqual(t.mean, int(post['mean']))
         self.assertEqual(t.invoice, post['invoice'])
         self.assertEqual(t.composite, False)
@@ -214,8 +215,9 @@ class TestEditComposite(TestCaseForViews):
                         date=date(2011, 1, 1),
                         year=2011,
                         category=CATEGORY_EXPENDITURE_PURCHASE,
-                        amount=123.45,
-                        vat=12.34,
+                        is_meal=False,
+                        net_amount=12345,
+                        vat=1234,
                         mean=PAYMENT_MEAN_CREDIT_CARD,
                         invoice=u'',
                         composite=True,
@@ -226,10 +228,4 @@ class TestEditComposite(TestCaseForViews):
         return t
 
     def test_basics(self):
-        from datetime import date
-        from brouz.models import CATEGORY_EXPENDITURE_SMALL_FURNITURE
-        from brouz.models import PAYMENT_MEAN_WIRE_TRANSFER
-        from brouz.models import Transaction
-        from brouz.models import TYPE_EXPENDITURE
-        t = self._make_one()
-        # FIXME: to be completed
+        pass # FIXME: to be completed

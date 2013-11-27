@@ -29,6 +29,7 @@ class TestCaseForViews(TestCase):
 
     def setUp(self):
         self.config = testing.setUp()
+        self.config.include('pyramid_chameleon')
         self.session = get_testing_db_session()
 
     def tearDown(self):

@@ -25,35 +25,4 @@ class TestFormatNumber(TestCase):
 
     def test_bogus_approximations(self):
         format = self._get_formatter('fr')
-        self.assertEqual(format(2389.97), u'2\xa0389,97')        
-
-
-class TestCalculateAmortization(TestCase):
-
-    def _call_fut(self, asset):
-        from brouz.utils import calculate_amortization
-        return calculate_amortization(asset)
-
-    def _make_asset(self, amount, vat, date):
-        class DummyAsset(object):
-            def __init__(self, amount, vat, date):
-                self.amount = amount
-                self.vat = vat
-                self.date = date
-        return DummyAsset(amount, vat, date)
-
-    def test_first_year_is_full(self):
-        from datetime import date
-        asset = self._make_asset(3001, 1, date(2012, 1, 1))
-        self.assertEqual(self._call_fut(asset), (1000, 1000, 1000))
-
-    def test_adjustment(self):
-        from datetime import date
-        asset = self._make_asset(3002, 1, date(2012, 1, 1))
-        self.assertEqual(self._call_fut(asset), (1000, 1000, 1001))
-
-    def test_first_year_is_partial(self):
-        from datetime import date
-        asset = self._make_asset(459, 59, date(2012, 7, 5))
-        self.assertEqual(self._call_fut(asset),
-                         (65, 133, 133, 69))
+        self.assertEqual(format(2389.97), u'2\xa0389,97')

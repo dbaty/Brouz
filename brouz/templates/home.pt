@@ -25,8 +25,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr tal:repeat="(i, line) enumerate(lines)"
->
+    <tr tal:repeat="(i, line) enumerate(lines)">
       <td class="edit-action">
         <a tal:attributes="href api.route_url('edit', transaction_id=line.id)"
            i18n:translate="">edit</a>
@@ -34,14 +33,14 @@
       <td tal:content="api.format_date(line.date)" class="nowrap"/>
       <td tal:content="line.party" class="nowrap"/>
       <td tal:content="line.title"/>
-      <td tal:content="api.format_num(line.signed_amount)" class="nowrap right-aligned"/>
-      <td tal:content="api.format_num(balances[1 + i])" class="nowrap right-aligned"/>
+      <td tal:content="line.signed_amount" class="nowrap right-aligned"/>
+      <td tal:content="balances[1 + i]" class="nowrap right-aligned"/>
     </tr>
   </tbody>
   <tfoot>
     <tr>
       <th colspan="4" i18n:translate="">Balance</th>
-      <td tal:content="api.format_num(balance)"/>
+      <td tal:content="balance"/>
     </tr>
   </tfoot>
 </table>

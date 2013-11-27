@@ -1,18 +1,3 @@
-- store amounts in eurocents
-
-- add a field to store VAT that can be deducted (if any)
-
-- add a checkbox for "meals" ("frais de bouche") : if checked, only a
-  part of it is taken in account
-
-  2013 : max = 17,70 TTC
-         base = 4,55 TTC
-
-  => deductible = max(min(year_max, amount) - base, 0)
-
-  http://vosdroits.service-public.fr/professionnels-entreprises/F31212.xhtml
-
-
 - use the same values for CATEGORY_* constants as those defined by
   AGAO (are they standard or specific to AGAO?)
 

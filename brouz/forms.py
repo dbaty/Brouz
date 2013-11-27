@@ -1,8 +1,7 @@
-import itertools
-
+from colander import Boolean
 from colander import Date
-from colander import Float
 from colander import Integer
+from colander import Money
 from colander import null
 from colander import Schema
 from colander import SchemaNode
@@ -20,6 +19,7 @@ from deform.widget import TextInputWidget
 
 from pyramid_deform import CSRFSchema
 
+from brouz import accounting
 from brouz.i18n import _
 from brouz.models import CATEGORY_EXPENDITURE_BANKING_CHARGES
 from brouz.models import CATEGORY_EXPENDITURE_CET
@@ -96,26 +96,21 @@ PAYMENT_MEANS = (('', _('Select the payment mean...')),
                  )
 
 
-def clone(node, counter):
-    cloned = node.clone()
-    cloned._order = next(counter)
-    return cloned
-
-
-class PermissiveFloat(Float):
-    """A custom type for ``colander`` that removes spaces and replaces
-    commas by dots in a string.
-
-    Colander uses ``float(s)`` to deserialize 'Float' nodes. This
-    works if and only if ``s`` uses a dot to indicate the decimal
-    part, which is not the case in French where a comma is used. Also,
-    we remove spaces (which may appear if the value comes from a
-    spreadsheet).
+class PriceType(Money):
+    """A custom type for ``colander`` that converts from and to
+    ``accounting.Price``.
     """
+
+    def serialize(self, node, appstruct):
+        if appstruct is null:
+            return null
+        return accounting.numeric_eurocents_to_text_euros(appstruct)
+
     def deserialize(self, node, cstruct):
-        if cstruct is not null:
-            cstruct = cstruct.replace(',', '.').replace(' ', '')
-        return Float.deserialize(self, node, cstruct)
+        v = Money.deserialize(self, node, cstruct)
+        if v is not null:
+            v = accounting.Price(accounting.numeric_euros_to_numeric_eurocents(v))
+        return v
 
 
 class _Line(Schema):
@@ -128,10 +123,12 @@ class _Line(Schema):
     category = SchemaNode(Integer(),
                           title=_('Category'),
                           widget=SelectWidget(values=CATEGORIES))
-    amount = SchemaNode(PermissiveFloat(),
+    is_meal = SchemaNode(Boolean(),
+                         title=_('Meal'))
+    net_amount = SchemaNode(PriceType(),
                         title=_('Amount'),
                         widget=TextInputWidget(size=8))
-    vat = SchemaNode(PermissiveFloat(),
+    vat = SchemaNode(PriceType(),
                      title=_('VAT'),
                      missing=0.0,
                      widget=TextInputWidget(size=8))
@@ -144,14 +141,18 @@ class _Lines(SequenceSchema):
 
 class CompositeTransactionSchema(CSRFSchema):
     """Schema used to add a composite transaction."""
-    __counter = itertools.count(7)
     party = SchemaNode(
         String(),
         title=_('Party'),
         widget=AutocompleteInputWidget(size=30,
                                        min_length=1,
                                        values='autocomplete/party'))
-    title = clone(_Line.title, __counter)
+    title = SchemaNode(
+        String(),
+        title=_('Title'),
+        widget=AutocompleteInputWidget(size=50,
+                                       min_length=1,
+                                       values='autocomplete/title'))
     date = SchemaNode(Date(),
                       title=_('Date'),
                       widget=DateInputWidget(size=10))
@@ -171,17 +172,42 @@ class UniqueTransactionSchema(CSRFSchema):
     """Schema used to add a unique transaction (i.e. a transaction
     that is not composite).
     """
-    # All fields are clones of fields of the schemas defined above to
-    # make the maintenance easier.
-    __counter = itertools.count()
-    party = clone(CompositeTransactionSchema.party, __counter)
-    title = clone(_Line.title, __counter)
-    date = clone(CompositeTransactionSchema.date, __counter)
-    category = clone(_Line.category, __counter)
-    amount = clone(_Line.amount, __counter)
-    vat = clone(_Line.vat, __counter)
-    mean = clone(CompositeTransactionSchema.mean, __counter)
-    invoice = clone(CompositeTransactionSchema.invoice, __counter)
+    # FIXME: all fields are duplicated from 'CompositeTransactionSchema'.
+    # I used to be able to clone schema nodes in a previous version
+    # but this does not seem to work with colander>0.9.9.
+    party = SchemaNode(
+        String(),
+        title=_('Party'),
+        widget=AutocompleteInputWidget(size=30,
+                                       min_length=1,
+                                       values='autocomplete/party'))
+    title = SchemaNode(
+        String(),
+        title=_('Title'),
+        widget=AutocompleteInputWidget(size=50,
+                                       min_length=1,
+                                       values='autocomplete/title'))
+    date = SchemaNode(Date(),
+                      title=_('Date'),
+                      widget=DateInputWidget(size=10))
+    category = SchemaNode(Integer(),
+                          title=_('Category'),
+                          widget=SelectWidget(values=CATEGORIES))
+    is_meal = SchemaNode(Boolean(),
+                         title=_('Meal'))
+    net_amount = SchemaNode(PriceType(),
+                        title=_('Amount'),
+                        widget=TextInputWidget(size=8))
+    vat = SchemaNode(PriceType(),
+                     title=_('VAT'),
+                     missing=0.0,
+                     widget=TextInputWidget(size=8))
+    mean = SchemaNode(Integer(),
+                      title=_('Mean'),
+                      widget=SelectWidget(values=PAYMENT_MEANS))
+    invoice = SchemaNode(String(),
+                         title=_('Invoice number'),
+                         missing=u'')
 
 
 def make_add_form(request, composite):

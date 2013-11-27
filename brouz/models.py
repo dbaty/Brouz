@@ -2,7 +2,6 @@ from sqlalchemy import Boolean
 from sqlalchemy import Column
 from sqlalchemy import create_engine
 from sqlalchemy import Date
-from sqlalchemy import Float
 from sqlalchemy import ForeignKey
 from sqlalchemy import Integer
 from sqlalchemy import MetaData
@@ -14,13 +13,12 @@ from sqlalchemy.orm import sessionmaker
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
+from brouz import accounting
+from brouz import enums
+
 
 DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 metadata = MetaData()
-
-TYPE_INCOME = 1
-TYPE_EXPENDITURE = 2
-TYPE_REMUNERATION = 3
 
 # These English terms probably do not make much sense. Hopefully, the
 # French translation does.
@@ -64,16 +62,16 @@ class Transaction(object):
     @property
     def type(self):
         if self.category == CATEGORY_REMUNERATION:
-            return TYPE_REMUNERATION
+            return enums.TYPE_REMUNERATION
         if self.category in (CATEGORY_INCOME_MISC, ):
-            return TYPE_INCOME
-        return TYPE_EXPENDITURE
+            return enums.TYPE_INCOME
+        return enums.TYPE_EXPENDITURE
 
     @property
     def signed_amount(self):
-        if self.type in (TYPE_EXPENDITURE, TYPE_REMUNERATION):
-            return -self.amount
-        return self.amount
+        if self.type in (enums.TYPE_EXPENDITURE, enums.TYPE_REMUNERATION):
+            return accounting.Price(-self.net_amount)
+        return accounting.Price(self.net_amount)
 
 
 transaction_table = Table(
@@ -91,8 +89,13 @@ transaction_table = Table(
     # (even though it is meaningless) to know whether the amount is
     # positive or negative.
     Column('category', Integer, nullable=False),
-    Column('amount', Float, nullable=False),
-    Column('vat', Float, nullable=False),
+    # If this corresponds to a meal, only a part of the amount may be
+    # deducted: see 'accounting.get_meal_deductible()'.
+    Column('is_meal', Boolean, nullable=False),
+    # amount in eurocents
+    Column('net_amount', Integer, nullable=False),
+    # VAT in eurocents
+    Column('vat', Integer, nullable=False),
     Column('mean', Integer, nullable=False),
     Column('invoice', Unicode, nullable=False),
     Column('composite', Boolean, nullable=False),
@@ -102,6 +105,8 @@ transaction_table = Table(
 
 transaction_mapper = mapper(
     Transaction, transaction_table)
+
+
 
 
 def initialize_sql(db_string, echo=False):

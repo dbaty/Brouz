@@ -23,4 +23,5 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
-Poulda.db
+Brouz.db*
+.sass-cache

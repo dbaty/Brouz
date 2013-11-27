@@ -7,6 +7,11 @@ from brouz.models import initialize_sql
 def make_app(global_settings, **settings):
     """Set up and return the WSGI application."""
     config = Configurator(settings=settings)
+
+    # Third-party includes
+    config.include('pyramid_chameleon')
+
+    # Initialize database and ORM
     db_verbose = settings.get('brouz.db_verbose', 'false').lower() == 'true'
     initialize_sql(settings['brouz.db_url'], echo=db_verbose)
 

@@ -10,8 +10,9 @@ CHANGES = ''
 
 
 REQUIRES = ('babel',
-            'deform',
+            'deform<=1.99',
             'pyramid',
+            'pyramid_chameleon',
             'pyramid_deform',
             'pyramid_tm',
             'sqlalchemy',
