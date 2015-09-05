@@ -12,9 +12,6 @@ license, a copy of which is included in the source.
 Documentation en français
 =========================
 
-**État du code :** fonctionnel mais encore peu testé en « situation
-réelle ».
-
 Brouz est une application web permettant de lister les recettes et
 dépenses, en les ventilant par catégorie. L'objectif est de faciliter
 la « déclaration contrôlée » que je dois établir en France en tant
@@ -30,6 +27,19 @@ vous vous engagez à :
 - m'envoyer un petit mot si l'application vous est utile, si vous avez
   corrigé des erreurs (notamment dans la logique de calcul des
   recettes, dépenses et taxes).
+
+
+État du code
+============
+
+Le code est fonctionnel mais peu utilisé en "situation réelle". J'ai
+rempli avec Brouz 3 déclarations 2035, y compris la dernière (début
+2014). Le code est assez simple mais je crois me souvenir d'avoir un
+peu bricolé le truc à l'arrache lors de ma dernière déclaration, alors
+bon, ça vaut ce que ça vaut...
+
+Je ne suis plus en entreprise individuelle et n'utilise ni ne
+maintient plus Brouz.
 
 
 Fonctionnalités
@@ -75,7 +85,6 @@ Contraintes
 2. La durée (3 ans) et le mode (linéaire) d'amortissement (et donc le
    taux d'amortissement de 33,33%) des immobilisations n'est pas
    modifiable.
-
 
 
 Notes
