@@ -11,7 +11,7 @@ from brouz import enums
 
 VAT_INSTALLMENT_DATES = (
     # (label, month, day)
-    ("Acompte d'avril", 1, 31),
+    ("Acompte d'avril", 3, 31),
     ("Acompte de juillet", 6, 30),
     ("Acompte de septembre", 9, 30),
     (u"Acompte de décembre", 11, 30),
@@ -211,11 +211,19 @@ def calculate_vat_installments(transactions, year):
             'label': label,
             'billed': 0,
             'deductible': 0,
+            'billed_base': 0,
+            'deductible_base': 0,
             'total': 0}
         for txn in transactions.filter(Transaction.date.between(start, end)):
-            installment['billed'] += get_billed_vat(txn)
-            installment['deductible'] += get_deductible_vat(txn)
+            billed_vat, billed_base = get_billed_vat(txn)
+            deductible_vat, deductible_base = get_deductible_vat(txn)
+            installment['billed'] += billed_vat
+            installment['deductible'] += deductible_vat
+            installment['billed_base'] += billed_base
+            installment['deductible_base'] += deductible_base
         installment['total'] = installment['billed'] - installment['deductible']
+        for key in ('billed', 'deductible', 'billed_base', 'deductible_base', 'total'):
+            installment[key] = RoundedPrice(installment[key])
         installments.append(installment)
         start = end + datetime.timedelta(days=1)
     return installments
@@ -223,16 +231,22 @@ def calculate_vat_installments(transactions, year):
 
 def get_deductible_vat(transaction):
     if transaction.type != enums.TYPE_EXPENDITURE:
-        return 0
+        return 0, 0
+    if transaction.is_meal:
+        return 0, 0
     # Gotcha: this assumes that VAT is set **only** on transactions
     # where it is deductible.
-    return RoundedPrice(transaction.vat)
+    if not transaction.vat:
+        return 0, 0
+    base = abs(transaction.signed_amount - transaction.vat)
+    return Price(transaction.vat), Price(base)
 
 
 def get_billed_vat(transaction):
     if transaction.type != enums.TYPE_INCOME:
-        return 0
-    return RoundedPrice(transaction.vat)
+        return 0, 0
+    base = transaction.signed_amount - transaction.vat
+    return Price(transaction.vat), base
 
 
 def get_meal_deductible(transaction):

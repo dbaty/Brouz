@@ -110,6 +110,8 @@ class PriceType(Money):
         v = Money.deserialize(self, node, cstruct)
         if v is not null:
             v = accounting.Price(accounting.numeric_euros_to_numeric_eurocents(v))
+        else:  # FIXME: quick work around, probably not the right thing to do
+            v = accounting.Price(0)
         return v
 
 

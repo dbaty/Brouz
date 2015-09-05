@@ -164,7 +164,9 @@
   <thead>
     <tr>
       <th></th>
+      <th i18n:translate="">Billed base</th>
       <th i18n:translate="">Billed VAT</th>
+      <th i18n:translate="">Deductible base</th>
       <th i18n:translate="">Deductible VAT</th>
       <th i18n:translate="">Total</th>
     </tr>
@@ -172,7 +174,9 @@
   <tbody>
     <tr tal:repeat="installment report['vat_installments']">
       <td tal:content="installment['label']"/>
+      <td tal:content="installment['billed_base']"/>
       <td tal:content="installment['billed']"/>
+      <td tal:content="installment['deductible_base']"/>
       <td tal:content="installment['deductible']"/>
       <td tal:content="installment['total']"/>
     </tr>
